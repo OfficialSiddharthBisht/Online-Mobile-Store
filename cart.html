@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Cart</h1>
+    <div id="head-cart">
+
+    </div>
+    <div id="promo">
+        <input id = "promocode" type="text" placeholder="Apply Discount Code">
+        <button onclick="applyPromo()">Apply</button>
+    </div>
+    <div id="cart-container">
+
+    </div>
+    <script>
+        let count = 0;
+        let ttprice = 0;
+        function applyPromo(){
+            let promocode = document.getElementById("promocode").value;
+            if(promocode === "masai30" && ttprice > 0){
+                let afterDiscount = (ttprice * 30) / 100;
+                ttprice = ttprice - afterDiscount;
+                alert("Discount Code Applied");
+                totalPrice.innerText = `Total Price To Pay Rs ${ttprice}`;
+            }
+        }
+        let cartContainer = document.getElementById("cart-continer");
+        let data;
+        if(localStorage.getItem('cartData') === null){
+            data = [];
+        }else{
+            data = JSON.parse(localStorage.getItem('cartData'))
+        }
+        // console.log(JSON.parse(localStorage.getItem('cartData')));
+        data.forEach((product,productIndex) => {
+        ttprice +=parseInt(product.price);
+        count++;
+        let box = document.createElement("div");
+        box.setAttribute('id','box');
+        let image = document.createElement("img");
+        let productName = document.createElement("h4");
+        let price = document.createElement("h3");
+        let cartBtn = document.createElement("button");
+        cartBtn.innerText = "Remove From Cart"
+        productName.innerText = product.name;
+        price.innerText = "RS "+ product.price;
+        image.src = product.image_url;
+        box.append(image,productName,price);
+        box.append(cartBtn);
+        cartBtn.addEventListener('click',()=>{
+            data.splice(productIndex , 1)
+            // console.log(JSON.parse(localStorage.getItem('cartData')));
+            localStorage.setItem('cartData',JSON.stringify(data));
+            window.location.reload();
+        })
+        document.querySelector("#cart-container").append(box);
+        });
+        let counter = document.createElement("h3");
+        counter.innerText = `Total Items In Cart : - ${count}`;
+        let totalPrice = document.createElement("h3");
+        totalPrice.innerText = `Total Price To Pay Rs ${ttprice}`;
+        let checkoutBtn = document.createElement("button");
+        checkoutBtn.innerText = "Proceed To Checkout";
+        checkoutBtn.addEventListener('click',()=>{
+            window.location = "./checkout.html";
+        })
+        document.querySelector("#head-cart").append(counter,totalPrice,checkoutBtn);
+    </script>
+</body>
+</html>
