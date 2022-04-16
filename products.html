@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Mobile Store</title>
+</head>
+<body>
+    <button>
+      <a href="cart.html"> Cart </a>
+    </button>
+    <h2>Online Mobile Store</h2>
+    <h3>Sort By Price</h3>
+    <select id="sortInput">
+      <option value="none">None</option>
+      <option value="priceHighToLow">Price high to low</option>
+      <option value="priceLowToHigh">Price low to high</option>
+    </select>
+    <h3>Sort By Rating</h3>
+    <select id="sortByRating">
+      <option value="none">None</option>
+    </select>
+    <div class="container">
+
+    </div>
+    <script src="data.js">
+   </script>
+   <script>
+    var filteredData = JSON.parse(JSON.stringify(mobilesData));
+    var cartData;
+
+    if(localStorage.getItem('cartData') === null) {
+        cartData = [];
+    } else {
+        cartData = JSON.parse(localStorage.getItem('cartData'));
+    }
+     document.querySelector('#sortInput').addEventListener('change', function() {
+      var sortType = document.querySelector('#sortInput').value;
+      if(sortType === 'none') {
+        displayData(mobilesData);
+      } else {
+        filteredData.sort(function(a, b) {
+          if(sortType === 'lowToHigh') {
+            return a.price - b.price;
+          } 
+          return b.price - a.price;
+        });
+        displayData(filteredData);
+      }
+    });
+    function displayData(mobilesData) {
+      document.querySelector('.container').innerHTML = '';
+      mobilesData.forEach(function(mobileData) {
+
+        var box = document.createElement('div');
+        box.setAttribute('class', 'box')
+
+        var img = document.createElement('img');
+        img.src = mobileData.image_url;
+
+
+        var name = document.createElement('p');
+        name.textContent = mobileData.name;
+
+        var price = document.createElement('p');
+        price.innerText = mobileData.price;
+
+        var cartButton = document.createElement('button');
+        cartButton.innerText = 'Add to cart';
+
+        cartButton.addEventListener('click', function() {
+          cartData.push(mobileData);
+            console.log(cartData);
+            alert("item added successfuly to cart");
+            localStorage.setItem('cartData', JSON.stringify(cartData));
+        });
+
+        box.append(img, name, price, cartButton);
+        document.querySelector('.container').append(box)
+    });
+  }
+   </script>
+</body>
+</html>
