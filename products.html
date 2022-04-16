@@ -5,10 +5,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Mobile Store</title>
+    <style>
+      *{
+        text-align: center;
+      }
+      .container{
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        margin: auto;
+        width: 80%;
+      }
+      .container .box{
+        padding: 50px;
+        margin: 25px;
+        border-radius: 20%;
+        text-align: center;
+        border: 2px solid black;
+        background-color: whitesmoke;
+        box-shadow: rgba(28, 129, 142, 0.2) 0px 2px 8px 0px;
+      }
+      .container .box img{
+        width: 50%;
+      }
+      #cart{
+        border: 2px solid blue;
+        border-radius: 20px;
+        padding: 15px;
+        background-color: aquamarine;
+        text-decoration: none;
+        font-weight: bolder;
+        
+      }
+    </style>
 </head>
 <body>
-      <a href="cart.html"> Cart </a>
-    <h2>Online Mobile Store</h2>
+      <a href="cart.html" id="cart"> Cart </a>
+    <h1>Online Mobile Store</h1>
     <h3>Sort By Price</h3>
     <select id="sortInput">
       <option value="none">None</option>
@@ -18,6 +50,8 @@
     <h3>Sort By Rating</h3>
     <select id="sortByRating">
       <option value="none">None</option>
+      <option value="priceHighToLow">Rating high to low</option>
+      <option value="priceLowToHigh">Rating low to high</option>
     </select>
     <div class="container">
 
