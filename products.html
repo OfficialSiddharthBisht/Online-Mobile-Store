@@ -88,15 +88,15 @@
         var box = document.createElement('div');
         box.setAttribute('class', 'box')
 
+        var price = document.createElement('p');
+        price.innerText = mobileData.price;
+
         var img = document.createElement('img');
         img.src = mobileData.image_url;
 
 
         var name = document.createElement('p');
         name.textContent = mobileData.name;
-
-        var price = document.createElement('p');
-        price.innerText = mobileData.price;
 
         var cartButton = document.createElement('button');
         cartButton.innerText = 'Add to cart';
